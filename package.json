@@ -1,0 +1,28 @@
+{
+  "name": "open-threat-database",
+  "version": "0.1.0",
+  "description": "An open, structured database of cyber security threats with STRIDE and MITRE ATT&CK mappings plus mitigating controls.",
+  "license": "MIT",
+  "author": "jib1337",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && cp src/threats.json dist/threats.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}
