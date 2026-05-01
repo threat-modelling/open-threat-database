@@ -1132,6 +1132,140 @@
         "https://etcd.io/docs/v3.5/op-guide/security/",
         "https://raft.github.io/"
       ]
+    },
+    {
+      "id": "phishing",
+      "name": "Phishing",
+      "description": "Adversary uses deceptive emails, messages, voice calls, or look-alike sites to trick users into revealing credentials, executing malicious payloads, or approving fraudulent transactions. Targeted variants (spearphishing, business email compromise) impersonate specific colleagues or vendors and are a primary initial-access vector for cloud account takeover.",
+      "severity": "high",
+      "stride": ["spoofing", "information-disclosure"],
+      "mitreTechniques": [
+        { "id": "T1566", "name": "Phishing", "tactic": "Initial Access" },
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1566.002", "name": "Spearphishing Link", "tactic": "Initial Access" },
+        { "id": "T1534", "name": "Internal Spearphishing", "tactic": "Lateral Movement" }
+      ],
+      "controls": [
+        { "id": "ctrl-phish-1", "description": "Enforce phishing-resistant MFA (FIDO2/WebAuthn) for all user accounts" },
+        { "id": "ctrl-phish-2", "description": "Deploy a secure email gateway with link rewriting, attachment sandboxing, and impersonation detection" },
+        { "id": "ctrl-phish-3", "description": "Run periodic phishing simulations and provide an in-client report-phish button" },
+        { "id": "ctrl-phish-4", "description": "Apply conditional access policies that block legacy authentication and require compliant devices" },
+        { "id": "ctrl-phish-5", "description": "Tag external-sender emails with a visible warning banner" },
+        { "id": "ctrl-phish-6", "description": "Require out-of-band verification for sensitive financial or credential-change requests" }
+      ],
+      "cwes": ["CWE-1021", "CWE-451"],
+      "references": [
+        "https://attack.mitre.org/techniques/T1566/",
+        "https://pages.nist.gov/800-63-3/sp800-63b.html",
+        "https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf"
+      ]
+    },
+    {
+      "id": "insider-threat",
+      "name": "Insider Threat",
+      "description": "Authorised individuals (employees, contractors, or partners) misuse legitimate access to exfiltrate data, sabotage systems, or commit fraud — either intentionally or through negligence. Distinct from credential theft because the actor already holds valid permissions, which makes detection dependent on behavioural rather than authentication signals.",
+      "severity": "high",
+      "stride": ["information-disclosure", "tampering", "repudiation"],
+      "mitreTechniques": [
+        { "id": "T1078", "name": "Valid Accounts", "tactic": "Defense Evasion" },
+        { "id": "T1530", "name": "Data from Cloud Storage", "tactic": "Collection" },
+        { "id": "T1485", "name": "Data Destruction", "tactic": "Impact" },
+        { "id": "T1052", "name": "Exfiltration Over Physical Medium", "tactic": "Exfiltration" }
+      ],
+      "controls": [
+        { "id": "ctrl-insider-1", "description": "Enforce least-privilege and just-in-time access with mandatory approval workflows for sensitive actions" },
+        { "id": "ctrl-insider-2", "description": "Deploy User and Entity Behaviour Analytics (UEBA) to detect anomalous access patterns" },
+        { "id": "ctrl-insider-3", "description": "Apply separation of duties for high-risk operations (production data access, financial transactions, key management)" },
+        { "id": "ctrl-insider-4", "description": "Run a joiner-mover-leaver process that promptly revokes access on role change or departure" },
+        { "id": "ctrl-insider-5", "description": "Use tamper-evident audit logging shipped to a system the actor cannot modify" },
+        { "id": "ctrl-insider-6", "description": "Apply DLP on email, file sharing, and removable media to detect bulk data egress" }
+      ],
+      "cwes": ["CWE-269"],
+      "references": [
+        "https://www.cisa.gov/topics/physical-security/insider-threat-mitigation",
+        "https://insights.sei.cmu.edu/library/common-sense-guide-to-mitigating-insider-threats-seventh-edition/"
+      ]
+    },
+    {
+      "id": "ransomware",
+      "name": "Ransomware",
+      "description": "Adversary encrypts or destroys organisational data and demands payment for decryption. Modern variants combine encryption with double-extortion exfiltration, threatening to publish stolen data even if backups allow recovery. Cloud-targeted ransomware additionally abuses identity to delete snapshots, rotate KMS keys, or wipe object storage.",
+      "severity": "critical",
+      "stride": ["tampering", "denial-of-service", "information-disclosure"],
+      "mitreTechniques": [
+        { "id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact" },
+        { "id": "T1657", "name": "Financial Theft", "tactic": "Impact" },
+        { "id": "T1567", "name": "Exfiltration Over Web Service", "tactic": "Exfiltration" }
+      ],
+      "controls": [
+        { "id": "ctrl-ransom-1", "description": "Maintain immutable, offline, and regularly tested backups following the 3-2-1 rule" },
+        { "id": "ctrl-ransom-2", "description": "Use object-lock or write-once storage and protect snapshot deletion with separate credentials and MFA" },
+        { "id": "ctrl-ransom-3", "description": "Network-segment to limit lateral movement; disable SMB/RDP exposure to the internet" },
+        { "id": "ctrl-ransom-4", "description": "Deploy EDR with anti-ransomware behavioural detection and automated isolation" },
+        { "id": "ctrl-ransom-5", "description": "Enforce phishing-resistant MFA and disable legacy authentication on identity providers" },
+        { "id": "ctrl-ransom-6", "description": "Apply application allowlisting and restrict macro and script execution on endpoints" },
+        { "id": "ctrl-ransom-7", "description": "Maintain and rehearse an incident response plan including ransom-payment policy and recovery runbooks" }
+      ],
+      "cwes": ["CWE-506"],
+      "references": [
+        "https://www.cisa.gov/stopransomware",
+        "https://attack.mitre.org/techniques/T1486/",
+        "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-209.pdf"
+      ]
+    },
+    {
+      "id": "dns-hijacking",
+      "name": "DNS Hijacking",
+      "description": "Adversary takes control of DNS resolution to redirect traffic to attacker-controlled infrastructure for credential capture, traffic interception, or malware delivery. Attack surfaces include compromised registrar accounts, unauthorised changes to authoritative records, resolver cache poisoning, and DNS rebinding attacks that abuse browser same-origin assumptions to reach internal services.",
+      "severity": "high",
+      "stride": ["spoofing", "tampering", "information-disclosure"],
+      "mitreTechniques": [
+        { "id": "T1584.002", "name": "Compromise Infrastructure: DNS Server", "tactic": "Resource Development" },
+        { "id": "T1557", "name": "Adversary-in-the-Middle", "tactic": "Credential Access" },
+        { "id": "T1071.004", "name": "Application Layer Protocol: DNS", "tactic": "Command and Control" },
+        { "id": "T1565.002", "name": "Transmitted Data Manipulation", "tactic": "Impact" }
+      ],
+      "controls": [
+        { "id": "ctrl-dnshijack-1", "description": "Enable DNSSEC on authoritative zones and validate responses on resolvers" },
+        { "id": "ctrl-dnshijack-2", "description": "Apply registrar lock and require MFA on domain-registrar and DNS-provider accounts" },
+        { "id": "ctrl-dnshijack-3", "description": "Alert on unauthorised DNS record changes and monitor certificate transparency logs for unexpected issuance" },
+        { "id": "ctrl-dnshijack-4", "description": "Mitigate DNS rebinding by validating Host headers server-side and rejecting RFC1918 answers from external resolvers" },
+        { "id": "ctrl-dnshijack-5", "description": "Use private DNS zones for internal services and avoid resolving them via public resolvers" },
+        { "id": "ctrl-dnshijack-6", "description": "Pin clients to trusted resolvers using DoH/DoT where feasible" }
+      ],
+      "cwes": ["CWE-290", "CWE-345"],
+      "references": [
+        "https://www.icann.org/dnssec",
+        "https://www.cisa.gov/news-events/cybersecurity-advisories/aa19-024a",
+        "https://datatracker.ietf.org/doc/html/rfc7858"
+      ]
+    },
+    {
+      "id": "email-spoofing",
+      "name": "Email Spoofing",
+      "description": "Adversary forges email sender identity to impersonate trusted parties for phishing, fraud, or business email compromise. Enabled by missing or permissive SPF/DKIM/DMARC records, open mail relays, or look-alike domains; closely paired with phishing as the delivery technique but distinct in that the failure is in mail-authentication policy rather than user judgement.",
+      "severity": "medium",
+      "stride": ["spoofing", "repudiation"],
+      "mitreTechniques": [
+        { "id": "T1656", "name": "Impersonation", "tactic": "Defense Evasion" },
+        { "id": "T1585.002", "name": "Establish Accounts: Email Accounts", "tactic": "Resource Development" },
+        { "id": "T1534", "name": "Internal Spearphishing", "tactic": "Lateral Movement" }
+      ],
+      "controls": [
+        { "id": "ctrl-emailspoof-1", "description": "Publish a strict DMARC policy (p=reject) with aligned SPF and DKIM for every sending domain, including parked ones" },
+        { "id": "ctrl-emailspoof-2", "description": "Configure inbound mail servers to enforce DMARC and reject or quarantine failures" },
+        { "id": "ctrl-emailspoof-3", "description": "Deploy MTA-STS and TLS-RPT to enforce authenticated transport between mail servers" },
+        { "id": "ctrl-emailspoof-4", "description": "Monitor DMARC aggregate and forensic reports to detect abuse and unauthorised senders" },
+        { "id": "ctrl-emailspoof-5", "description": "Apply external-sender warning banners and detect display-name impersonation of executives" },
+        { "id": "ctrl-emailspoof-6", "description": "Defensively register and lock common typo-squat and homoglyph variants of corporate domains" }
+      ],
+      "cwes": ["CWE-290", "CWE-345"],
+      "references": [
+        "https://datatracker.ietf.org/doc/html/rfc7489",
+        "https://datatracker.ietf.org/doc/html/rfc8461",
+        "https://www.cisa.gov/news-events/news/enhanced-email-and-web-security"
+      ]
     }
   ]
 }
