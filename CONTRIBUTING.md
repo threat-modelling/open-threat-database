@@ -8,30 +8,6 @@ Thanks for wanting to improve the open-threat-database. This catalogue is consum
 
 **Out of scope:** consumer-specific concepts. If a threat only exists as a modelling construct inside a particular tool's UI (e.g. "this threat applies to connections in a diagram"), that classification belongs in the consumer, not here. This keeps the database useful to any number of tools without forcing them to share domain assumptions.
 
-## The ID-stability contract
-
-Threat `id` and control `id` values are **permanent once released**. Consumers store these IDs in their own data (user threat models, severity overrides, "control implemented" checkboxes), so renames silently break user data.
-
-Rules:
-
-- **Additions are always safe.** Adding a new threat or a new control to an existing threat is a minor version bump.
-- **Renames require deprecation.** If a threat or control must be renamed, move the old ID into the `aliases` array on the renamed entity. `getThreatById` resolves aliases transparently, so consumers that have the old ID stored continue to work. Keep the alias in place for at least one minor release before considering removal.
-- **Deletions are breaking changes** and require a major version bump plus a migration note in the changelog. Removing an alias is also a breaking change.
-- **Wording changes to `name`, `description`, or `controls[].description` are fine** — these are not stable identifiers.
-
-Example — suppose a hypothetical threat originally named `csrf` is renamed to `csrf-attack` for consistency with other `-attack` IDs. The renamed entry would look like:
-
-```json
-{
-  "id": "csrf-attack",
-  "aliases": ["csrf"],
-  "name": "Cross-Site Request Forgery",
-  ...
-}
-```
-
-`getThreatById('csrf')` would then continue to return the renamed threat. Aliases must not collide with any primary ID or any other alias — the test suite enforces this.
-
 ## Adding a threat
 
 Edit `src/threats.json`. Each threat must match the schema in `src/schema.ts`:
@@ -67,6 +43,34 @@ Conventions:
 - `controls`: prefer concrete, verifiable controls. Avoid generic phrases like "improve security".
 - `references` (optional): URLs to authoritative deep-dive guidance (OWASP cheat sheets, NIST publications, vendor security docs, RFCs). Prefer stable canonical sources over blog posts. Two to four high-quality links is the sweet spot.
 
+## The ID-stability contract
+
+Threat `id` and control `id` values are **permanent once released**. Consumers store these IDs in their own data (user threat models, severity overrides, "control implemented" checkboxes), so renames silently break user data.
+
+Rules:
+
+- **Additions are always safe.** Adding a new threat or a new control to an existing threat is a minor version bump.
+- **Renames require deprecation.** If a threat or control must be renamed, move the old ID into the `aliases` array on the renamed entity. `getThreatById` resolves aliases transparently, so consumers that have the old ID stored continue to work. Keep the alias in place for at least one minor release before considering removal.
+- **Deletions are breaking changes** and require a major version bump plus a migration note in the changelog. Removing an alias is also a breaking change.
+- **Wording changes to `name`, `description`, or `controls[].description` are fine** — these are not stable identifiers.
+
+Example — suppose a hypothetical threat originally named `csrf` is renamed to `csrf-attack` for consistency with other `-attack` IDs. The renamed entry would look like:
+
+```json
+{
+  "id": "csrf-attack",
+  "aliases": ["csrf"],
+  "name": "Cross-Site Request Forgery",
+  ...
+}
+```
+
+`getThreatById('csrf')` would then continue to return the renamed threat. Aliases must not collide with any primary ID or any other alias — the test suite enforces this.
+
+### Stable identifiers and aliases
+
+`id` values on threats and controls are permanent. If a threat is renamed, the old ID is preserved in `aliases` and `getThreatById('old-id')` continues to return the renamed threat.
+
 ## Testing
 
 ```bash
@@ -76,10 +80,43 @@ npm test
 
 Tests validate that IDs are unique, required fields are present, and enum values are from the allowed set.
 
+## Previewing on the site
+
+The catalogue is published to GitHub Pages on each release. To preview your edits as they will appear there:
+
+```bash
+npm run dev:site      # build, serve at http://localhost:8080/, auto-reload on edits
+npm run preview:site  # build and serve once, no watch
+```
+
+Override the port with `PORT=4321 npm run dev:site`. The generated `site/` directory is a build artifact and is gitignored.
+
 ## Releasing
 
+### Package version bump guidance
 - Breaking changes (deletions, schema changes): major version bump.
 - New threats, new controls on existing threats, additional fields: minor bump.
 - Wording fixes, typo corrections: patch bump.
 
-Tag the release (`git tag vX.Y.Z`) so downstream consumers can pin to it.
+### Expected package metadata
+
+The fields in `package.json` are part of the release contract:
+
+| Field | Purpose |
+|-------|---------|
+| `name`, `version` | npm-required; version bumps follow [the semver policy](./CONTRIBUTING.md#releasing). |
+| `description`, `keywords` | npm search discoverability. |
+| `repository`, `homepage`, `bugs` | Link the npm listing back to GitHub. |
+| `license`, `author` | MIT. |
+| `type`, `main`, `types` | ES module entry points and TypeScript types. |
+| `exports["."]` | Public JS/TS entry point — consumers `import` from `open-threat-database`. |
+| `exports["./schema.json"]` | Exposes the JSON Schema at `open-threat-database/schema.json` for non-JS consumers. |
+| `files` | Only `dist/` is shipped — source and tests are excluded. |
+| `engines.node` | Minimum supported Node version (currently `>=18`). |
+| `scripts.build` | Must produce `dist/threats.json` and `dist/schema.json`; the release workflow attaches both. |
+
+When editing metadata:
+
+- Do not remove or rename existing `exports` entries — both `open-threat-database` and `open-threat-database/schema.json` are public and consumers depend on them.
+- Do not drop `engines.node` below a Node LTS that is still in active support.
+- Adding new keywords or expanding the description is always safe.
