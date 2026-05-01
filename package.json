@@ -13,16 +13,16 @@
     "cwe",
     "vulnerability"
   ],
-  "homepage": "https://github.com/jib1337/open-threat-database#readme",
+  "homepage": "https://github.com/threat-modelling/open-threat-database#readme",
   "bugs": {
-    "url": "https://github.com/jib1337/open-threat-database/issues"
+    "url": "https://github.com/threat-modelling/open-threat-database/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jib1337/open-threat-database.git"
+    "url": "git+https://github.com/threat-modelling/open-threat-database.git"
   },
   "license": "MIT",
-  "author": "jib1337",
+  "author": "threat-modelling",
   "type": "module",
   "exports": {
     ".": {
