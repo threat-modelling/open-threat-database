@@ -1,17 +1,7 @@
 {
-  "name": "open-threat-database",
-  "version": "0.1.0",
+  "name": "@threat-modelling/open-threat-database",
+  "version": "0.1.1",
   "description": "An open, structured database of cyber security threats with STRIDE, MITRE ATT&CK and CWE mappings, plus mitigating controls and authoritative references.",
-  "license": "MIT",
-  "author": "jib1337",
-  "homepage": "https://github.com/jib1337/open-threat-database#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jib1337/open-threat-database.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jib1337/open-threat-database/issues"
-  },
   "keywords": [
     "threat-modelling",
     "threat-modeling",
@@ -23,12 +13,17 @@
     "cwe",
     "vulnerability"
   ],
-  "engines": {
-    "node": ">=18"
+  "homepage": "https://github.com/jib1337/open-threat-database#readme",
+  "bugs": {
+    "url": "https://github.com/jib1337/open-threat-database/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jib1337/open-threat-database.git"
+  },
+  "license": "MIT",
+  "author": "jib1337",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,6 +31,8 @@
     },
     "./schema.json": "./dist/schema.json"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -52,5 +49,8 @@
     "tsx": "^4.19.2",
     "typescript": "^5.6.2",
     "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
