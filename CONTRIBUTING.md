@@ -15,9 +15,22 @@ Threat `id` and control `id` values are **permanent once released**. Consumers s
 Rules:
 
 - **Additions are always safe.** Adding a new threat or a new control to an existing threat is a minor version bump.
-- **Renames require deprecation.** If a threat or control must be renamed, keep the old ID reachable through an `aliases` field for at least one minor release before removal. (Aliases are not yet implemented — open an issue if you need one.)
-- **Deletions are breaking changes** and require a major version bump plus a migration note in the changelog.
+- **Renames require deprecation.** If a threat or control must be renamed, move the old ID into the `aliases` array on the renamed entity. `getThreatById` resolves aliases transparently, so consumers that have the old ID stored continue to work. Keep the alias in place for at least one minor release before considering removal.
+- **Deletions are breaking changes** and require a major version bump plus a migration note in the changelog. Removing an alias is also a breaking change.
 - **Wording changes to `name`, `description`, or `controls[].description` are fine** — these are not stable identifiers.
+
+Example — suppose a hypothetical threat originally named `csrf` is renamed to `csrf-attack` for consistency with other `-attack` IDs. The renamed entry would look like:
+
+```json
+{
+  "id": "csrf-attack",
+  "aliases": ["csrf"],
+  "name": "Cross-Site Request Forgery",
+  ...
+}
+```
+
+`getThreatById('csrf')` would then continue to return the renamed threat. Aliases must not collide with any primary ID or any other alias — the test suite enforces this.
 
 ## Adding a threat
 
@@ -33,8 +46,12 @@ Edit `src/threats.json`. Each threat must match the schema in `src/schema.ts`:
   "mitreTechniques": [
     { "id": "T1190", "name": "Exploit Public-Facing Application", "tactic": "Initial Access" }
   ],
+  "cwes": ["CWE-89"],
   "controls": [
     { "id": "ctrl-shortname-1", "description": "Actionable mitigation." }
+  ],
+  "references": [
+    "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
   ]
 }
 ```
@@ -46,7 +63,9 @@ Conventions:
 - `severity`: judge based on typical blast radius if the threat is realised without compensating controls. Don't anchor to best-case or worst-case.
 - `stride`: list every applicable category, in the canonical order from `schema.ts`.
 - `mitreTechniques`: include all directly relevant techniques. Tactic strings match the ATT&CK Enterprise matrix.
+- `cwes` (optional): one or more CWE IDs that classify this threat at the weakness level. Strongly preferred for any threat that maps cleanly to CWE — omit only when no CWE is a reasonable fit (e.g. governance threats like Shadow IT). Format `CWE-<digits>`.
 - `controls`: prefer concrete, verifiable controls. Avoid generic phrases like "improve security".
+- `references` (optional): URLs to authoritative deep-dive guidance (OWASP cheat sheets, NIST publications, vendor security docs, RFCs). Prefer stable canonical sources over blog posts. Two to four high-quality links is the sweet spot.
 
 ## Testing
 

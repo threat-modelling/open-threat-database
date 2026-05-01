@@ -16,6 +16,11 @@
         { "id": "ctrl-sql-3", "description": "Use ORM frameworks that automatically escape inputs" },
         { "id": "ctrl-sql-4", "description": "Implement least-privilege database accounts" },
         { "id": "ctrl-sql-5", "description": "Enable database activity monitoring and alerting" }
+      ],
+      "cwes": ["CWE-89"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A03_2021-Injection/"
       ]
     },
     {
@@ -32,6 +37,11 @@
         { "id": "ctrl-nosql-2", "description": "Use parameterized queries where supported" },
         { "id": "ctrl-nosql-3", "description": "Implement schema validation" },
         { "id": "ctrl-nosql-4", "description": "Apply principle of least privilege for database access" }
+      ],
+      "cwes": ["CWE-943", "CWE-89"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A03_2021-Injection/"
       ]
     },
     {
@@ -50,6 +60,11 @@
         { "id": "ctrl-unauth-3", "description": "Implement network segmentation and firewalls" },
         { "id": "ctrl-unauth-4", "description": "Enable comprehensive access logging and monitoring" },
         { "id": "ctrl-unauth-5", "description": "Regularly review and audit access permissions" }
+      ],
+      "cwes": ["CWE-284", "CWE-862"],
+      "references": [
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html"
       ]
     },
     {
@@ -68,6 +83,11 @@
         { "id": "ctrl-misconf-3", "description": "Use automated configuration scanning tools" },
         { "id": "ctrl-misconf-4", "description": "Disable unnecessary services and features" },
         { "id": "ctrl-misconf-5", "description": "Follow cloud provider security best practices" }
+      ],
+      "cwes": ["CWE-1188", "CWE-732"],
+      "references": [
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+        "https://www.cisecurity.org/cis-benchmarks"
       ]
     },
     {
@@ -86,7 +106,9 @@
         { "id": "ctrl-exfil-3", "description": "Monitor and alert on unusual data transfers" },
         { "id": "ctrl-exfil-4", "description": "Implement egress filtering and monitoring" },
         { "id": "ctrl-exfil-5", "description": "Classify and label sensitive data" }
-      ]
+      ],
+      "cwes": ["CWE-200"],
+      "references": ["https://attack.mitre.org/tactics/TA0010/"]
     },
     {
       "id": "privilege-escalation",
@@ -104,6 +126,11 @@
         { "id": "ctrl-privesc-3", "description": "Monitor for suspicious privilege changes" },
         { "id": "ctrl-privesc-4", "description": "Use privileged access management (PAM) solutions" },
         { "id": "ctrl-privesc-5", "description": "Disable unnecessary SUID/SGID binaries" }
+      ],
+      "cwes": ["CWE-269"],
+      "references": [
+        "https://attack.mitre.org/tactics/TA0004/",
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/"
       ]
     },
     {
@@ -122,7 +149,9 @@
         { "id": "ctrl-dos-3", "description": "Configure auto-scaling for critical services" },
         { "id": "ctrl-dos-4", "description": "Implement CDN for traffic distribution" },
         { "id": "ctrl-dos-5", "description": "Set up monitoring and alerting for traffic anomalies" }
-      ]
+      ],
+      "cwes": ["CWE-400", "CWE-770"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html"]
     },
     {
       "id": "malware-infection",
@@ -140,7 +169,9 @@
         { "id": "ctrl-malware-3", "description": "Keep systems patched and updated" },
         { "id": "ctrl-malware-4", "description": "Disable unnecessary scripting engines" },
         { "id": "ctrl-malware-5", "description": "Implement email and web filtering" }
-      ]
+      ],
+      "cwes": ["CWE-506"],
+      "references": ["https://attack.mitre.org/tactics/TA0002/"]
     },
     {
       "id": "injection-attack",
@@ -158,6 +189,11 @@
         { "id": "ctrl-inject-3", "description": "Implement Content Security Policy (CSP)" },
         { "id": "ctrl-inject-4", "description": "Apply output encoding for different contexts" },
         { "id": "ctrl-inject-5", "description": "Use Web Application Firewalls (WAF)" }
+      ],
+      "cwes": ["CWE-94"],
+      "references": [
+        "https://owasp.org/Top10/A03_2021-Injection/",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html"
       ]
     },
     {
@@ -175,7 +211,9 @@
         { "id": "ctrl-excess-3", "description": "Use role-based access control (RBAC)" },
         { "id": "ctrl-excess-4", "description": "Implement just-in-time (JIT) access" },
         { "id": "ctrl-excess-5", "description": "Automate permission rightsizing" }
-      ]
+      ],
+      "cwes": ["CWE-250", "CWE-272"],
+      "references": ["https://owasp.org/Top10/A01_2021-Broken_Access_Control/"]
     },
     {
       "id": "sensitive-data-exposure",
@@ -193,6 +231,11 @@
         { "id": "ctrl-sensitive-3", "description": "Use secrets management solutions" },
         { "id": "ctrl-sensitive-4", "description": "Mask sensitive data in logs and outputs" },
         { "id": "ctrl-sensitive-5", "description": "Implement data classification and handling policies" }
+      ],
+      "cwes": ["CWE-200", "CWE-311", "CWE-312"],
+      "references": [
+        "https://owasp.org/Top10/A02_2021-Cryptographic_Failures/",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html"
       ]
     },
     {
@@ -210,6 +253,11 @@
         { "id": "ctrl-bucket-3", "description": "Enable access logging and monitoring" },
         { "id": "ctrl-bucket-4", "description": "Use automated scanning for public buckets" },
         { "id": "ctrl-bucket-5", "description": "Encrypt all stored objects" }
+      ],
+      "cwes": ["CWE-732", "CWE-200"],
+      "references": [
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html"
       ]
     },
     {
@@ -227,6 +275,11 @@
         { "id": "ctrl-container-3", "description": "Implement pod security policies/standards" },
         { "id": "ctrl-container-4", "description": "Disable privileged containers" },
         { "id": "ctrl-container-5", "description": "Use container runtime security tools" }
+      ],
+      "cwes": ["CWE-653", "CWE-269"],
+      "references": [
+        "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+        "https://csrc.nist.gov/pubs/sp/800/190/final"
       ]
     },
     {
@@ -244,6 +297,11 @@
         { "id": "ctrl-supply-3", "description": "Implement software bill of materials (SBOM)" },
         { "id": "ctrl-supply-4", "description": "Use private container registries" },
         { "id": "ctrl-supply-5", "description": "Pin dependency versions and verify checksums" }
+      ],
+      "cwes": ["CWE-1357", "CWE-829"],
+      "references": [
+        "https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/",
+        "https://slsa.dev/"
       ]
     },
     {
@@ -262,6 +320,11 @@
         { "id": "ctrl-cred-3", "description": "Use secrets management solutions" },
         { "id": "ctrl-cred-4", "description": "Monitor for credential misuse" },
         { "id": "ctrl-cred-5", "description": "Implement credential-less authentication where possible" }
+      ],
+      "cwes": ["CWE-522", "CWE-798"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html",
+        "https://pages.nist.gov/800-63-3/sp800-63b.html"
       ]
     },
     {
@@ -281,6 +344,11 @@
         { "id": "ctrl-audit-4", "description": "Implement log integrity verification" },
         { "id": "ctrl-audit-5", "description": "Alert on logging configuration changes" },
         { "id": "ctrl-audit-6", "description": "Monitor for security service status changes (e.g., detector disabled, logging stopped)" }
+      ],
+      "cwes": ["CWE-778"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/"
       ]
     },
     {
@@ -298,7 +366,9 @@
         { "id": "ctrl-net-3", "description": "Use network segmentation" },
         { "id": "ctrl-net-4", "description": "Implement network flow logging" },
         { "id": "ctrl-net-5", "description": "Use infrastructure as code for network config" }
-      ]
+      ],
+      "cwes": ["CWE-1188", "CWE-732"],
+      "references": ["https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"]
     },
     {
       "id": "lateral-movement",
@@ -316,6 +386,11 @@
         { "id": "ctrl-lateral-3", "description": "Monitor for unusual internal traffic patterns" },
         { "id": "ctrl-lateral-4", "description": "Implement jump servers for administrative access" },
         { "id": "ctrl-lateral-5", "description": "Disable unnecessary remote access protocols" }
+      ],
+      "cwes": ["CWE-668"],
+      "references": [
+        "https://attack.mitre.org/tactics/TA0008/",
+        "https://csrc.nist.gov/pubs/sp/800/207/final"
       ]
     },
     {
@@ -334,6 +409,11 @@
         { "id": "ctrl-auth-3", "description": "Implement account lockout mechanisms" },
         { "id": "ctrl-auth-4", "description": "Use secure session management" },
         { "id": "ctrl-auth-5", "description": "Implement rate limiting on authentication endpoints" }
+      ],
+      "cwes": ["CWE-287", "CWE-307"],
+      "references": [
+        "https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
       ]
     },
     {
@@ -352,7 +432,9 @@
         { "id": "ctrl-msg-4", "description": "Validate message integrity on receipt" },
         { "id": "ctrl-msg-5", "description": "Implement dead-letter queue monitoring and alerting for tampered or poisoned messages" },
         { "id": "ctrl-msg-6", "description": "Restrict producer access using IAM policies or broker-level authorization" }
-      ]
+      ],
+      "cwes": ["CWE-345", "CWE-353"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html"]
     },
     {
       "id": "log-tampering",
@@ -369,7 +451,9 @@
         { "id": "ctrl-log-3", "description": "Implement log integrity monitoring" },
         { "id": "ctrl-log-4", "description": "Restrict log deletion permissions" },
         { "id": "ctrl-log-5", "description": "Enable object lock or legal hold on log storage for compliance retention periods" }
-      ]
+      ],
+      "cwes": ["CWE-117", "CWE-778"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"]
     },
     {
       "id": "backup-exposure",
@@ -385,7 +469,9 @@
         { "id": "ctrl-backup-2", "description": "Implement strict access controls on backups" },
         { "id": "ctrl-backup-3", "description": "Store backups in separate security zone" },
         { "id": "ctrl-backup-4", "description": "Regularly test backup restoration procedures" }
-      ]
+      ],
+      "cwes": ["CWE-200", "CWE-311"],
+      "references": ["https://owasp.org/Top10/A02_2021-Cryptographic_Failures/"]
     },
     {
       "id": "unpatched-vulnerabilities",
@@ -403,10 +489,12 @@
         { "id": "ctrl-patch-3", "description": "Establish patch SLAs based on severity" },
         { "id": "ctrl-patch-4", "description": "Use vulnerability management platform" },
         { "id": "ctrl-patch-5", "description": "Implement compensating controls for delayed patches" }
-      ]
+      ],
+      "cwes": ["CWE-1104"],
+      "references": ["https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/"]
     },
     {
-      "id": "connection-mitm",
+      "id": "mitm-attack",
       "name": "Man-in-the-Middle Attack",
       "description": "Attacker intercepts and potentially modifies communication between two connected services",
       "severity": "medium",
@@ -420,10 +508,12 @@
         { "id": "ctrl-mitm-2", "description": "Implement mutual TLS (mTLS) authentication" },
         { "id": "ctrl-mitm-3", "description": "Use certificate pinning where applicable" },
         { "id": "ctrl-mitm-4", "description": "Implement network segmentation" }
-      ]
+      ],
+      "cwes": ["CWE-300", "CWE-319"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html"]
     },
     {
-      "id": "connection-data-exposure",
+      "id": "data-in-transit-exposure",
       "name": "Data Exposure in Transit",
       "description": "Sensitive data transmitted between services may be exposed if not properly encrypted",
       "severity": "medium",
@@ -437,10 +527,15 @@
         { "id": "ctrl-transit-2", "description": "Avoid transmitting sensitive data when possible" },
         { "id": "ctrl-transit-3", "description": "Implement end-to-end encryption for highly sensitive data" },
         { "id": "ctrl-transit-4", "description": "Use secure protocols (HTTPS, SFTP, etc.)" }
+      ],
+      "cwes": ["CWE-319", "CWE-311"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A02_2021-Cryptographic_Failures/"
       ]
     },
     {
-      "id": "connection-replay",
+      "id": "replay-attack",
       "name": "Replay Attack",
       "description": "Attacker captures and retransmits valid data transmissions to perform unauthorized actions",
       "severity": "medium",
@@ -453,10 +548,12 @@
         { "id": "ctrl-replay-2", "description": "Use short-lived tokens and session identifiers" },
         { "id": "ctrl-replay-3", "description": "Implement message sequence numbers" },
         { "id": "ctrl-replay-4", "description": "Use TLS to prevent packet capture" }
-      ]
+      ],
+      "cwes": ["CWE-294"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"]
     },
     {
-      "id": "connection-injection",
+      "id": "protocol-injection",
       "name": "Protocol Injection",
       "description": "Attacker injects malicious data into the communication channel between services",
       "severity": "medium",
@@ -469,10 +566,12 @@
         { "id": "ctrl-proto-2", "description": "Use message authentication codes (MACs)" },
         { "id": "ctrl-proto-3", "description": "Implement strict protocol parsing" },
         { "id": "ctrl-proto-4", "description": "Use encrypted and authenticated protocols" }
-      ]
+      ],
+      "cwes": ["CWE-74"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html"]
     },
     {
-      "id": "connection-dos",
+      "id": "connection-flooding",
       "name": "Connection Flooding",
       "description": "Attacker overwhelms the connection between services to disrupt communication",
       "severity": "low",
@@ -485,7 +584,9 @@
         { "id": "ctrl-connflood-2", "description": "Use connection pooling and timeouts" },
         { "id": "ctrl-connflood-3", "description": "Deploy load balancers with DDoS protection" },
         { "id": "ctrl-connflood-4", "description": "Implement circuit breakers for resilience" }
-      ]
+      ],
+      "cwes": ["CWE-400", "CWE-770"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html"]
     },
     {
       "id": "prompt-injection",
@@ -504,6 +605,11 @@
         { "id": "ctrl-prompt-5", "description": "Apply rate limiting per user and session" },
         { "id": "ctrl-prompt-6", "description": "Implement platform-specific content safety guardrails (e.g., Bedrock Guardrails, Azure Content Safety, Vertex AI Safety Settings)" },
         { "id": "ctrl-prompt-7", "description": "Isolate user-provided input from system instructions using structured API formats" }
+      ],
+      "cwes": ["CWE-1427"],
+      "references": [
+        "https://genai.owasp.org/llm-top-10/",
+        "https://atlas.mitre.org/"
       ]
     },
     {
@@ -522,6 +628,11 @@
         { "id": "ctrl-poison-4", "description": "Conduct regular model behavior audits" },
         { "id": "ctrl-poison-5", "description": "Implement access controls and audit logging on training data storage" },
         { "id": "ctrl-poison-6", "description": "Verify training data integrity using checksums or cryptographic hashes before training runs" }
+      ],
+      "cwes": ["CWE-20"],
+      "references": [
+        "https://genai.owasp.org/llm-top-10/",
+        "https://atlas.mitre.org/"
       ]
     },
     {
@@ -538,6 +649,11 @@
         { "id": "ctrl-extract-2", "description": "Monitor for systematic querying patterns" },
         { "id": "ctrl-extract-3", "description": "Add output perturbation to prevent exact replication" },
         { "id": "ctrl-extract-4", "description": "Restrict API access with strong authentication" }
+      ],
+      "cwes": ["CWE-200"],
+      "references": [
+        "https://genai.owasp.org/llm-top-10/",
+        "https://atlas.mitre.org/"
       ]
     },
     {
@@ -556,6 +672,11 @@
         { "id": "ctrl-ssrf-3", "description": "Block requests to internal IP ranges and metadata endpoints" },
         { "id": "ctrl-ssrf-4", "description": "Use network segmentation to limit server access" },
         { "id": "ctrl-ssrf-5", "description": "Disable unnecessary URL schemes (file://, gopher://, etc.)" }
+      ],
+      "cwes": ["CWE-918"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/"
       ]
     },
     {
@@ -572,7 +693,9 @@
         { "id": "ctrl-cache-2", "description": "Use signed URLs or cache tokens" },
         { "id": "ctrl-cache-3", "description": "Configure appropriate cache headers and TTLs" },
         { "id": "ctrl-cache-4", "description": "Monitor cache hit rates for anomalies" }
-      ]
+      ],
+      "cwes": ["CWE-444", "CWE-349"],
+      "references": ["https://owasp.org/www-community/attacks/Cache_Poisoning"]
     },
     {
       "id": "event-injection",
@@ -588,7 +711,9 @@
         { "id": "ctrl-event-2", "description": "Implement event signing and verification" },
         { "id": "ctrl-event-3", "description": "Use IAM policies to restrict event sources" },
         { "id": "ctrl-event-4", "description": "Monitor event patterns for anomalies" }
-      ]
+      ],
+      "cwes": ["CWE-77", "CWE-20"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html"]
     },
     {
       "id": "stream-hijacking",
@@ -607,7 +732,9 @@
         { "id": "ctrl-stream-4", "description": "Monitor stream throughput and patterns for anomalies" },
         { "id": "ctrl-stream-5", "description": "Secure checkpoint and offset storage to prevent consumer position manipulation" },
         { "id": "ctrl-stream-6", "description": "Implement consumer group isolation to prevent unauthorized consumers from joining" }
-      ]
+      ],
+      "cwes": ["CWE-345", "CWE-294"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html"]
     },
     {
       "id": "workflow-manipulation",
@@ -623,7 +750,9 @@
         { "id": "ctrl-workflow-2", "description": "Validate state transitions and inputs at each step" },
         { "id": "ctrl-workflow-3", "description": "Enable comprehensive workflow execution logging" },
         { "id": "ctrl-workflow-4", "description": "Use workflow versioning and change management" }
-      ]
+      ],
+      "cwes": ["CWE-841", "CWE-840"],
+      "references": ["https://owasp.org/www-community/vulnerabilities/Business_logic_vulnerability"]
     },
     {
       "id": "token-theft",
@@ -641,7 +770,9 @@
         { "id": "ctrl-token-3", "description": "Store tokens securely (HttpOnly, Secure cookies)" },
         { "id": "ctrl-token-4", "description": "Implement token revocation mechanisms" },
         { "id": "ctrl-token-5", "description": "Monitor for token reuse from multiple locations" }
-      ]
+      ],
+      "cwes": ["CWE-522"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"]
     },
     {
       "id": "account-takeover",
@@ -659,6 +790,11 @@
         { "id": "ctrl-takeover-3", "description": "Monitor for suspicious login patterns" },
         { "id": "ctrl-takeover-4", "description": "Implement account lockout and notification policies" },
         { "id": "ctrl-takeover-5", "description": "Check credentials against known breach databases" }
+      ],
+      "cwes": ["CWE-287", "CWE-521"],
+      "references": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html",
+        "https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/"
       ]
     },
     {
@@ -677,6 +813,11 @@
         { "id": "ctrl-oauth-3", "description": "Monitor OAuth token usage for anomalous patterns" },
         { "id": "ctrl-oauth-4", "description": "Implement OAuth app allowlisting policies" },
         { "id": "ctrl-oauth-5", "description": "Use short-lived tokens with automatic refresh" }
+      ],
+      "cwes": ["CWE-863", "CWE-639"],
+      "references": [
+        "https://datatracker.ietf.org/doc/html/rfc6819",
+        "https://oauth.net/2/"
       ]
     },
     {
@@ -695,6 +836,11 @@
         { "id": "ctrl-integration-3", "description": "Monitor data flows between integrated applications" },
         { "id": "ctrl-integration-4", "description": "Enforce API rate limiting and access controls" },
         { "id": "ctrl-integration-5", "description": "Regularly review and remove unused integrations" }
+      ],
+      "cwes": ["CWE-829", "CWE-1357"],
+      "references": [
+        "https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/",
+        "https://csrc.nist.gov/pubs/sp/800/161/r1/final"
       ]
     },
     {
@@ -713,7 +859,9 @@
         { "id": "ctrl-saas-leak-3", "description": "Monitor and audit external sharing activities" },
         { "id": "ctrl-saas-leak-4", "description": "Disable public link sharing for sensitive content" },
         { "id": "ctrl-saas-leak-5", "description": "Implement data classification and labeling" }
-      ]
+      ],
+      "cwes": ["CWE-200", "CWE-732"],
+      "references": ["https://cloudsecurityalliance.org/research/cloud-controls-matrix/"]
     },
     {
       "id": "shadow-it",
@@ -731,7 +879,8 @@
         { "id": "ctrl-shadow-3", "description": "Establish approved SaaS application catalog" },
         { "id": "ctrl-shadow-4", "description": "Provide easy request process for new SaaS applications" },
         { "id": "ctrl-shadow-5", "description": "Conduct regular shadow IT discovery and remediation" }
-      ]
+      ],
+      "references": ["https://cloudsecurityalliance.org/research/working-groups/casb/"]
     },
     {
       "id": "data-classification-evasion",
@@ -749,7 +898,9 @@
         { "id": "ctrl-classify-3", "description": "Apply classification at multiple points in data lifecycle" },
         { "id": "ctrl-classify-4", "description": "Regularly update detection rules and patterns" },
         { "id": "ctrl-classify-5", "description": "Implement human review for edge cases and anomalies" }
-      ]
+      ],
+      "cwes": ["CWE-200"],
+      "references": ["https://csrc.nist.gov/pubs/sp/800/122/final"]
     },
     {
       "id": "etl-pipeline-manipulation",
@@ -767,7 +918,9 @@
         { "id": "ctrl-etl-3", "description": "Monitor pipeline modifications and execution patterns" },
         { "id": "ctrl-etl-4", "description": "Implement data validation at pipeline stages" },
         { "id": "ctrl-etl-5", "description": "Use separate credentials for pipeline execution with least privilege" }
-      ]
+      ],
+      "cwes": ["CWE-345", "CWE-829"],
+      "references": ["https://csrc.nist.gov/pubs/sp/800/53/r5/final"]
     },
     {
       "id": "remote-command-execution",
@@ -785,7 +938,9 @@
         { "id": "ctrl-remotecmd-3", "description": "Use session recording for administrative access" },
         { "id": "ctrl-remotecmd-4", "description": "Implement approval workflows for sensitive operations" },
         { "id": "ctrl-remotecmd-5", "description": "Restrict command execution to approved runbooks" }
-      ]
+      ],
+      "cwes": ["CWE-78", "CWE-77"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html"]
     },
     {
       "id": "batch-job-tampering",
@@ -803,7 +958,9 @@
         { "id": "ctrl-batch-3", "description": "Monitor job execution for anomalous behavior" },
         { "id": "ctrl-batch-4", "description": "Implement network isolation for batch compute environments" },
         { "id": "ctrl-batch-5", "description": "Use separate IAM roles with least privilege for each job type" }
-      ]
+      ],
+      "cwes": ["CWE-829"],
+      "references": ["https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/"]
     },
     {
       "id": "graphql-abuse",
@@ -821,7 +978,9 @@
         { "id": "ctrl-graphql-3", "description": "Implement field-level authorization checks" },
         { "id": "ctrl-graphql-4", "description": "Use query cost analysis and rate limiting" },
         { "id": "ctrl-graphql-5", "description": "Validate and sanitize all query inputs" }
-      ]
+      ],
+      "cwes": ["CWE-770", "CWE-639"],
+      "references": ["https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html"]
     },
     {
       "id": "search-index-poisoning",
@@ -839,7 +998,8 @@
         { "id": "ctrl-search-3", "description": "Monitor index modifications for anomalies" },
         { "id": "ctrl-search-4", "description": "Implement search result filtering based on user permissions" },
         { "id": "ctrl-search-5", "description": "Use separate indexes for different sensitivity levels" }
-      ]
+      ],
+      "cwes": ["CWE-345"]
     },
     {
       "id": "hybrid-infrastructure-attack",
@@ -857,7 +1017,9 @@
         { "id": "ctrl-hybrid-3", "description": "Monitor hybrid connection traffic for anomalies" },
         { "id": "ctrl-hybrid-4", "description": "Implement network segmentation between environments" },
         { "id": "ctrl-hybrid-5", "description": "Use private endpoints and avoid public internet routing" }
-      ]
+      ],
+      "cwes": ["CWE-668"],
+      "references": ["https://csrc.nist.gov/pubs/sp/800/207/final"]
     },
     {
       "id": "data-lake-governance-bypass",
@@ -875,7 +1037,9 @@
         { "id": "ctrl-datalake-3", "description": "Use column and row-level security for sensitive data" },
         { "id": "ctrl-datalake-4", "description": "Implement data masking for sensitive fields" },
         { "id": "ctrl-datalake-5", "description": "Regularly audit and review data access patterns" }
-      ]
+      ],
+      "cwes": ["CWE-863", "CWE-732"],
+      "references": ["https://owasp.org/Top10/A01_2021-Broken_Access_Control/"]
     },
     {
       "id": "kubernetes-secrets-exposure",
@@ -893,6 +1057,11 @@
         { "id": "ctrl-k8ssecret-3", "description": "Implement strict RBAC policies limiting access to secrets" },
         { "id": "ctrl-k8ssecret-4", "description": "Enable audit logging for all secrets access" },
         { "id": "ctrl-k8ssecret-5", "description": "Use sealed-secrets or external-secrets operator for GitOps workflows" }
+      ],
+      "cwes": ["CWE-522", "CWE-312"],
+      "references": [
+        "https://kubernetes.io/docs/concepts/configuration/secret/",
+        "https://csrc.nist.gov/pubs/sp/800/190/final"
       ]
     },
     {
@@ -911,6 +1080,11 @@
         { "id": "ctrl-clusterstate-3", "description": "Run etcd on dedicated nodes with no other workloads" },
         { "id": "ctrl-clusterstate-4", "description": "Enable etcd audit logging and monitor for direct API access" },
         { "id": "ctrl-clusterstate-5", "description": "Implement network policies to isolate etcd from pod network" }
+      ],
+      "cwes": ["CWE-269", "CWE-345"],
+      "references": [
+        "https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/",
+        "https://www.cisecurity.org/benchmark/kubernetes"
       ]
     },
     {
@@ -929,6 +1103,11 @@
         { "id": "ctrl-etcdsnap-3", "description": "Implement backup retention policies and secure deletion" },
         { "id": "ctrl-etcdsnap-4", "description": "Use separate credentials for backup operations with minimal permissions" },
         { "id": "ctrl-etcdsnap-5", "description": "Monitor access to snapshot storage locations" }
+      ],
+      "cwes": ["CWE-200", "CWE-522"],
+      "references": [
+        "https://etcd.io/docs/v3.5/op-guide/recovery/",
+        "https://www.cisecurity.org/benchmark/kubernetes"
       ]
     },
     {
@@ -947,6 +1126,11 @@
         { "id": "ctrl-consensus-3", "description": "Deploy etcd across multiple availability zones with proper quorum" },
         { "id": "ctrl-consensus-4", "description": "Monitor cluster health metrics and member status" },
         { "id": "ctrl-consensus-5", "description": "Implement network segmentation for etcd peer traffic" }
+      ],
+      "cwes": ["CWE-345", "CWE-400"],
+      "references": [
+        "https://etcd.io/docs/v3.5/op-guide/security/",
+        "https://raft.github.io/"
       ]
     }
   ]

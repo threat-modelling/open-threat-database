@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jib1337/open-threat-database/schema.json",
+  "title": "Open Threat Database",
+  "description": "Schema for the open threat database: a curated catalogue of cyber security threats with STRIDE classifications, MITRE ATT&CK technique mappings, and mitigating controls.",
+  "type": "object",
+  "required": ["threats"],
+  "additionalProperties": false,
+  "properties": {
+    "threats": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/threat" }
+    }
+  },
+  "$defs": {
+    "stride": {
+      "description": "STRIDE category. See https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats for definitions.",
+      "type": "string",
+      "enum": [
+        "spoofing",
+        "tampering",
+        "repudiation",
+        "information-disclosure",
+        "denial-of-service",
+        "elevation-of-privilege"
+      ]
+    },
+    "severity": {
+      "description": "Severity judged on typical blast radius if the threat is realised without compensating controls.",
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "threatId": {
+      "description": "Permanent kebab-case identifier for a threat.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "controlId": {
+      "description": "Control identifier. Convention: ctrl-{threat-shortname}-{number}.",
+      "type": "string",
+      "pattern": "^ctrl-[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "cweId": {
+      "description": "Common Weakness Enumeration identifier, e.g. CWE-89.",
+      "type": "string",
+      "pattern": "^CWE-\\d+$"
+    },
+    "referenceUrl": {
+      "description": "URL to authoritative guidance about the threat (OWASP cheat sheet, NIST SP, vendor docs, RFC, etc.).",
+      "type": "string",
+      "pattern": "^https?://[^\\s]+$"
+    },
+    "mitreTechnique": {
+      "description": "MITRE ATT&CK technique or sub-technique reference.",
+      "type": "object",
+      "required": ["id", "name", "tactic"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "ATT&CK technique ID, e.g. T1190 or sub-technique T1550.001.",
+          "type": "string",
+          "pattern": "^T\\d{4}(\\.\\d{3})?$"
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "tactic": {
+          "description": "ATT&CK tactic name, e.g. \"Initial Access\". Free-form for now; constrain to a closed set in a future schema version.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "required": ["id", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/controlId" },
+        "description": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "description": "Former IDs that still resolve to this control. Used when a control is renamed without breaking consumers that have the old ID stored.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/controlId" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "threat": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "severity",
+        "stride",
+        "mitreTechniques",
+        "controls"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/threatId" },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "severity": { "$ref": "#/$defs/severity" },
+        "stride": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stride" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "mitreTechniques": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/mitreTechnique" }
+        },
+        "cwes": {
+          "description": "CWE IDs that classify this threat.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/cweId" },
+          "uniqueItems": true
+        },
+        "controls": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/control" }
+        },
+        "references": {
+          "description": "URLs to authoritative guidance about the threat.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/referenceUrl" },
+          "uniqueItems": true
+        },
+        "aliases": {
+          "description": "Former IDs that still resolve to this threat. Used when a threat is renamed without breaking consumers that have the old ID stored.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/threatId" },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

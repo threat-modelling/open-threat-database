@@ -1,9 +1,31 @@
 {
   "name": "open-threat-database",
   "version": "0.1.0",
-  "description": "An open, structured database of cyber security threats with STRIDE and MITRE ATT&CK mappings plus mitigating controls.",
+  "description": "An open, structured database of cyber security threats with STRIDE, MITRE ATT&CK and CWE mappings, plus mitigating controls and authoritative references.",
   "license": "MIT",
   "author": "jib1337",
+  "homepage": "https://github.com/jib1337/open-threat-database#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jib1337/open-threat-database.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jib1337/open-threat-database/issues"
+  },
+  "keywords": [
+    "threat-modelling",
+    "threat-modeling",
+    "threat-database",
+    "security",
+    "appsec",
+    "stride",
+    "mitre-attack",
+    "cwe",
+    "vulnerability"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,17 +33,19 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./schema.json": "./dist/schema.json"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc && cp src/threats.json dist/threats.json",
+    "build": "tsc && cp src/threats.json dist/threats.json && cp src/schema.json dist/schema.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "ajv": "^8.17.1",
     "typescript": "^5.6.2",
     "vitest": "^3.2.4"
   }
