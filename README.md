@@ -7,14 +7,14 @@ Intended for threat modelling tools, security review tooling, and anyone who wan
 ## Install
 
 ```bash
-npm install open-threat-database
+npm install @threat-modelling/open-threat-database
 ```
 
 ## Usage
 
 ```ts
-import { threats, getThreatById } from 'open-threat-database';
-import type { Threat } from 'open-threat-database';
+import { threats, getThreatById } from '@threat-modelling/open-threat-database';
+import type { Threat } from '@threat-modelling/open-threat-database';
 
 console.log(threats.length);
 
@@ -48,10 +48,10 @@ See `src/schema.ts` for the full type definitions.
 A JSON Schema (draft 2020-12) describing the data is published alongside the package, for consumers in any language:
 
 ```ts
-import schema from 'open-threat-database/schema.json' with { type: 'json' };
+import schema from '@threat-modelling/open-threat-database/schema.json' with { type: 'json' };
 ```
 
-Or resolve the file path directly: `require.resolve('open-threat-database/schema.json')`.
+Or resolve the file path directly: `require.resolve('@threat-modelling/open-threat-database/schema.json')`.
 
 ## Using from non-JS languages
 
