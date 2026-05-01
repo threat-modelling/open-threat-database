@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..');
@@ -135,7 +135,6 @@ function indexBody(threats: Threat[]): string {
 
   return `<section class="intro">
   <h1>Threat Catalogue</h1>
-  <p>${threats.length} threats with STRIDE, MITRE ATT&amp;CK and CWE mappings, plus mitigating controls and authoritative references.</p>
 </section>
 <section class="filters" id="filters">
   <fieldset>
@@ -253,7 +252,7 @@ function schemaBody(schemaText: string): string {
 `;
 }
 
-async function main() {
+export async function build(): Promise<void> {
   await rm(outDir, { recursive: true, force: true });
   await mkdir(outDir, { recursive: true });
 
@@ -309,7 +308,10 @@ async function main() {
   console.log(`Built ${threats.length} threat pages → ${outDir}`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;
+if (isMain) {
+  build().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

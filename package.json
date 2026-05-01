@@ -42,6 +42,8 @@
   "scripts": {
     "build": "tsc && cp src/threats.json dist/threats.json && cp src/schema.json dist/schema.json",
     "build:site": "tsx scripts/build-site.ts",
+    "preview:site": "npm run build:site && tsx scripts/serve-site.ts",
+    "dev:site": "npm run build:site && tsx scripts/serve-site.ts --watch",
     "test": "vitest run",
     "test:watch": "vitest"
   },
