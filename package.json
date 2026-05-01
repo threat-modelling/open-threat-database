@@ -42,7 +42,8 @@
     "preview:site": "npm run build:site && tsx scripts/serve-site.ts",
     "dev:site": "npm run build:site && tsx scripts/serve-site.ts --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

@@ -1,0 +1,37 @@
+name: Report a data issue
+description: Inaccurate severity, wrong MITRE mapping, broken reference, missing control, etc.
+title: "Data issue: "
+labels: ["data: fix"]
+body:
+  - type: input
+    id: threat-id
+    attributes:
+      label: Threat ID
+      description: The `id` of the affected threat (or control ID if more specific).
+      placeholder: e.g. sql-injection
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What's wrong?
+      options:
+        - Severity is miscalibrated
+        - STRIDE classification is wrong or incomplete
+        - MITRE ATT&CK mapping is wrong or missing
+        - CWE mapping is wrong or missing
+        - Control is inaccurate, generic, or missing
+        - Reference URL is broken or no longer authoritative
+        - Description is inaccurate or misleading
+        - Other (explain below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What is wrong, what should it be, and why? Include source links where relevant.
+    validations:
+      required: true

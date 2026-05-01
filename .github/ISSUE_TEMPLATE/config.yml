@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution guide
+    url: https://github.com/threat-modelling/open-threat-database/blob/main/CONTRIBUTING.md
+    about: Schema, ID-stability rules, and how to add or modify threats.

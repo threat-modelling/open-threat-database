@@ -1,0 +1,95 @@
+name: Suggest a new threat
+description: Propose a new threat for the catalogue.
+title: "Add threat: "
+labels: ["threat: new"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing, skim [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) — particularly the **In scope / Out of scope** rule.
+        Consumer-specific concepts (e.g. "applies to a connection in a diagram") belong in the consuming tool, not here.
+
+  - type: input
+    id: proposed-id
+    attributes:
+      label: Proposed ID
+      description: Kebab-case, descriptive, 2–5 words. Permanent once released.
+      placeholder: e.g. server-side-request-forgery
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Human-readable title.
+      placeholder: e.g. Server-Side Request Forgery
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: One paragraph on the threat and how it manifests.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: Judge by typical blast radius without compensating controls.
+      options:
+        - low
+        - medium
+        - high
+        - critical
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: stride
+    attributes:
+      label: STRIDE categories
+      description: Tick every category that applies.
+      options:
+        - label: spoofing
+        - label: tampering
+        - label: repudiation
+        - label: information-disclosure
+        - label: denial-of-service
+        - label: elevation-of-privilege
+    validations:
+      required: true
+
+  - type: textarea
+    id: mitre
+    attributes:
+      label: MITRE ATT&CK techniques
+      description: List directly relevant techniques as `Txxxx — Name (Tactic)`.
+      placeholder: |
+        T1190 — Exploit Public-Facing Application (Initial Access)
+    validations:
+      required: true
+
+  - type: input
+    id: cwes
+    attributes:
+      label: CWE IDs (optional)
+      description: Comma-separated. Strongly preferred when a CWE applies.
+      placeholder: e.g. CWE-918
+
+  - type: textarea
+    id: controls
+    attributes:
+      label: Proposed controls
+      description: Concrete, verifiable mitigations — one per line. Avoid generic phrases like "improve security".
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References (optional)
+      description: Authoritative sources — OWASP, NIST, vendor docs, RFCs. Two to four high-quality links is the sweet spot.
