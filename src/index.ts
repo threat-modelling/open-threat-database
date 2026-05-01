@@ -1,4 +1,4 @@
-import threatsData from './threats.json';
+import threatsData from './threats.json' with { type: 'json' };
 import type { Threat, ThreatDatabase } from './schema';
 
 const db = threatsData as ThreatDatabase;
