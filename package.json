@@ -1,6 +1,6 @@
 {
   "name": "@threat-modelling/open-threat-database",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An open, structured database of cyber security threats with STRIDE, MITRE ATT&CK and CWE mappings, plus mitigating controls and authoritative references.",
   "keywords": [
     "threat-modelling",
