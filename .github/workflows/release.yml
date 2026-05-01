@@ -7,6 +7,11 @@ on:
         description: 'Existing tag to release (e.g. v0.1.0)'
         required: true
         type: string
+      publish_npm:
+        description: 'Publish the package to npm'
+        required: false
+        type: boolean
+        default: true
   push:
     branches:
       - main
@@ -66,11 +71,11 @@ jobs:
         run: npm run build
 
       - name: Upgrade npm for trusted publishing
-        if: steps.check.outputs.exists == 'false'
+        if: steps.check.outputs.exists == 'false' && (github.event_name == 'push' || inputs.publish_npm)
         run: npm install -g npm@latest
 
       - name: Publish to npm
-        if: steps.check.outputs.exists == 'false'
+        if: steps.check.outputs.exists == 'false' && (github.event_name == 'push' || inputs.publish_npm)
         run: npm publish --provenance --access public
 
       - name: Create tag from package.json version
