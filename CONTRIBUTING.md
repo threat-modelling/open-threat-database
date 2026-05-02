@@ -147,6 +147,8 @@ Override the port with `PORT=4321 npm run dev:site`. The generated `site/` direc
 
 ## Releasing
 
+All notable changes are recorded in [`CHANGELOG.md`](./CHANGELOG.md). Add an entry under `[Unreleased]` as part of any change-bearing PR.
+
 ### Package version bump guidance
 - Breaking changes (deletions, schema changes): major version bump.
 - New threats, new controls on existing threats, additional fields: minor bump.
