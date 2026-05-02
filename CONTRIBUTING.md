@@ -147,6 +147,7 @@ Override the port with `PORT=4321 npm run dev:site`. The generated `site/` direc
 
 ## Releasing
 
+Changes are releases with a pull request to main by the contributor.  
 All notable changes are recorded in [`CHANGELOG.md`](./CHANGELOG.md). Add an entry under `[Unreleased]` as part of any change-bearing PR.
 
 ### Package version bump guidance
