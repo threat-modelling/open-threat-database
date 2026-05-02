@@ -308,7 +308,7 @@
       "id": "credential-theft",
       "name": "Credential Theft",
       "description": "Attackers steal credentials to gain unauthorized access to systems",
-      "severity": "critical",
+      "severity": "high",
       "stride": ["spoofing", "elevation-of-privilege"],
       "mitreTechniques": [
         { "id": "T1555", "name": "Credentials from Password Stores", "tactic": "Credential Access" },
@@ -397,7 +397,7 @@
       "id": "broken-authentication",
       "name": "Broken Authentication",
       "description": "Weak authentication mechanisms allow attackers to compromise user accounts",
-      "severity": "medium",
+      "severity": "high",
       "stride": ["spoofing"],
       "mitreTechniques": [
         { "id": "T1110", "name": "Brute Force", "tactic": "Credential Access" },
@@ -459,7 +459,7 @@
       "id": "backup-exposure",
       "name": "Backup Data Exposure",
       "description": "Database backups stored insecurely expose sensitive data",
-      "severity": "medium",
+      "severity": "high",
       "stride": ["information-disclosure"],
       "mitreTechniques": [
         { "id": "T1530", "name": "Data from Cloud Storage Object", "tactic": "Collection" }
@@ -592,7 +592,7 @@
       "id": "prompt-injection",
       "name": "Prompt Injection",
       "description": "Attacker manipulates AI model inputs to bypass safety controls, extract sensitive information, or cause unintended behavior",
-      "severity": "critical",
+      "severity": "high",
       "stride": ["tampering", "information-disclosure", "elevation-of-privilege"],
       "mitreTechniques": [
         { "id": "T1059", "name": "Command and Scripting Interpreter", "tactic": "Execution" }
@@ -778,7 +778,7 @@
       "id": "account-takeover",
       "name": "Account Takeover",
       "description": "Attacker gains control of user accounts through credential stuffing, phishing, or session hijacking",
-      "severity": "critical",
+      "severity": "high",
       "stride": ["spoofing", "elevation-of-privilege"],
       "mitreTechniques": [
         { "id": "T1078", "name": "Valid Accounts", "tactic": "Defense Evasion" },
