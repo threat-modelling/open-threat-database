@@ -82,6 +82,7 @@ function layout(opts: { title: string; relRoot: string; body: string }): string 
 <header class="site-header">
   <a href="${relRoot}" class="site-title">Open Threat Database</a>
   <nav>
+    <a href="${relRoot}severity/">Severity</a>
     <a href="${relRoot}schema/">Schema</a>
     <a href="https://github.com/threat-modelling/open-threat-database" rel="noopener">GitHub</a>
   </nav>
@@ -203,7 +204,7 @@ function detailBody(threat: Threat): string {
   <p class="breadcrumb"><a href="../../">All threats</a></p>
   <header class="detail-head">
     <h1>${escape(threat.name)}</h1>
-    <span class="severity sev-${escape(threat.severity)}">${escape(threat.severity)}</span>
+    <a class="severity sev-${escape(threat.severity)}" href="../../severity/#${escape(threat.severity)}" title="What does ${escape(threat.severity)} mean?">${escape(threat.severity)}</a>
   </header>
   <p class="threat-id"><code>${escape(threat.id)}</code></p>
   ${aliasesHtml}
@@ -239,6 +240,77 @@ function aliasRedirect(canonicalId: string): string {
 <p>This threat has been renamed. Redirecting to <a href="${target}">${escape(canonicalId)}</a>.</p>
 </body>
 </html>
+`;
+}
+
+function severityBody(): string {
+  return `<article class="detail">
+  <p class="breadcrumb"><a href="../">All threats</a></p>
+  <h1>Severity rubric</h1>
+  <p class="lede">Severity ranks the <strong>intrinsic impact</strong> of a threat being realised without compensating controls. Likelihood is deliberately not weighted — it depends on the consuming environment. The four levels are anchored to <a href="https://www.first.org/cvss/v3-1/specification-document" rel="noopener">CVSS v3.1</a> qualitative bands so a rating can be sanity-checked against a known industry standard.</p>
+  <p>When more than one tier could fit, <strong>pick the highest</strong> that applies.</p>
+
+  <section class="severity-tier" id="critical">
+    <header class="detail-head">
+      <h2>Critical</h2>
+    </header>
+    <p>Any of:</p>
+    <ul>
+      <li>Direct, persistent privileged execution on a host or control plane: root, SYSTEM, container host, cluster admin, cloud account or organisation admin, KMS key holder.</li>
+      <li>Disclosure of "kingdom keys" — long-lived credentials, tokens, certificates, or secrets that <em>themselves</em> grant the privileged tier above (cluster certificates, etcd snapshots, root API keys, broad service-account keys).</li>
+      <li>Wholesale loss of integrity or availability of tenant data: mass deletion, ransom encryption, control-plane wipe, destruction of backups.</li>
+    </ul>
+    <p class="cvss-band"><strong>CVSS-equivalent:</strong> typically C:H/I:H/A:H, often scope-changed; CVSS &ge; 9.0.</p>
+  </section>
+
+  <section class="severity-tier" id="high">
+    <header class="detail-head">
+      <h2>High</h2>
+    </header>
+    <p>Any of:</p>
+    <ul>
+      <li>Initial code execution or full compromise of a single workload, service, or account at non-privileged level, with realistic abuse paths to escalate.</li>
+      <li>Theft of credentials, tokens, or session material that grants access to other systems but <strong>not</strong> directly to the privileged tier above.</li>
+      <li>Authentication or authorisation bypass that exposes substantial protected data or functionality.</li>
+      <li>Lateral pivot capability that enables — but does not by itself constitute — a privileged compromise.</li>
+    </ul>
+    <p class="cvss-band"><strong>CVSS-equivalent:</strong> typically two of C/I/A at High, scope unchanged; CVSS 7.0&ndash;8.9.</p>
+  </section>
+
+  <section class="severity-tier" id="medium">
+    <header class="detail-head">
+      <h2>Medium</h2>
+    </header>
+    <p>Any of:</p>
+    <ul>
+      <li>Unauthorised read or modification of protected application data without obtaining execution or credentials.</li>
+      <li>Design or configuration weakness that <strong>expands the blast radius</strong> of other threats but is not by itself directly exploitable for access (excessive permissions, weak segmentation, unpatched non-critical CVEs).</li>
+      <li>Tampering with messages, events, or workflows in transit or at processing time, without persistent access.</li>
+    </ul>
+    <p class="cvss-band"><strong>CVSS-equivalent:</strong> one of C/I/A at High, or two at Low; CVSS 4.0&ndash;6.9.</p>
+  </section>
+
+  <section class="severity-tier" id="low">
+    <header class="detail-head">
+      <h2>Low</h2>
+    </header>
+    <p>Any of:</p>
+    <ul>
+      <li>Repudiation: ability to deny or obscure an authorised action without altering data integrity (e.g. logging bypass with no further chained effect).</li>
+      <li>Low-impact information disclosure: internal hostnames, version banners, fingerprintable error messages.</li>
+      <li>Volumetric availability impact only — service is degraded but no confidentiality or integrity loss.</li>
+    </ul>
+    <p class="cvss-band"><strong>CVSS-equivalent:</strong> CVSS 0.1&ndash;3.9.</p>
+  </section>
+
+  <h2>Tie-breakers and anti-patterns</h2>
+  <ul>
+    <li><strong>Credential disclosure tiers on what the credential unlocks.</strong> An AWS root key is Critical. A single user's app password is High. A read-only API token to non-sensitive endpoints is Medium.</li>
+    <li><strong>Don't escalate by reputation.</strong> "Ransomware" sounds scary, but the rating still has to come from the rubric (in its case: wholesale data integrity and availability loss &rarr; Critical).</li>
+    <li><strong>Severity is per threat <em>class</em>, not per worst-known instance.</strong> <code>unpatched-vulnerabilities</code> is rated on the category's typical blast radius, not the worst CVE that ever shipped under that label.</li>
+    <li><strong>Don't weight likelihood, exploitability, or detection difficulty.</strong> Those are environmental — the catalogue ranks impact only.</li>
+  </ul>
+</article>
 `;
 }
 
@@ -291,6 +363,16 @@ export async function build(): Promise<void> {
       }
     }
   }
+
+  await mkdir(join(outDir, 'severity'), { recursive: true });
+  await writeFile(
+    join(outDir, 'severity/index.html'),
+    layout({
+      title: 'Severity rubric — Open Threat Database',
+      relRoot: '../',
+      body: severityBody(),
+    }),
+  );
 
   await mkdir(join(outDir, 'schema'), { recursive: true });
   await writeFile(

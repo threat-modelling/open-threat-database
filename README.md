@@ -43,6 +43,19 @@ interface Threat {
 
 See `src/schema.ts` for the full type definitions.
 
+### Severity
+
+`severity` rates the intrinsic impact of a threat being realised without compensating controls. Likelihood is intentionally not weighted, since it depends on the consuming environment. The four levels are anchored to [CVSS v3.1](https://www.first.org/cvss/v3-1/specification-document) qualitative bands:
+
+| Level | Typical impact | CVSS band |
+|-------|----------------|-----------|
+| **Critical** | Privileged execution (root/admin/control-plane) or kingdom-key disclosure | ≥ 9.0 |
+| **High** | Non-privileged compromise, credential theft enabling further access, or substantial authorisation bypass | 7.0–8.9 |
+| **Medium** | Unauthorised data access/modification, or design weaknesses that expand blast radius of other threats | 4.0–6.9 |
+| **Low** | Repudiation, low-impact disclosure, or volumetric availability impact only | 0.1–3.9 |
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md#severity-rubric) for the full rubric and tie-breakers.
+
 ### JSON Schema
 
 A JSON Schema (draft 2020-12) describing the data is published alongside the package, for consumers in any language:
