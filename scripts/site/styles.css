@@ -190,6 +190,21 @@ main {
 .sev-medium   { background: var(--sev-medium);   color: #1c1c1c; }
 .sev-low      { background: var(--sev-low);      color: #ffffff; }
 
+a.severity:hover { text-decoration: none; filter: brightness(1.08); }
+
+.severity-tier { margin-top: 1.75rem; scroll-margin-top: 4rem; }
+.severity-tier .detail-head { margin: 0 0 0.5rem; }
+.severity-tier h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text);
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.cvss-band { color: var(--muted); font-size: 0.92rem; margin-top: 0.5rem; }
+
 .empty-state {
   color: var(--muted);
   text-align: center;

@@ -36,12 +36,66 @@ Conventions:
 
 - `id`: kebab-case, descriptive, 2–5 words. Use existing IDs as a guide.
 - `controls[].id`: `ctrl-{threat-shortname}-{number}`, numbered sequentially within the threat.
-- `severity`: judge based on typical blast radius if the threat is realised without compensating controls. Don't anchor to best-case or worst-case.
+- `severity`: assigned per the [Severity rubric](#severity-rubric) below. Judge typical blast radius without compensating controls — not best-case, not worst-case.
 - `stride`: list every applicable category, in the canonical order from `schema.ts`.
 - `mitreTechniques`: include all directly relevant techniques. Tactic strings match the ATT&CK Enterprise matrix.
 - `cwes` (optional): one or more CWE IDs that classify this threat at the weakness level. Strongly preferred for any threat that maps cleanly to CWE — omit only when no CWE is a reasonable fit (e.g. governance threats like Shadow IT). Format `CWE-<digits>`.
 - `controls`: prefer concrete, verifiable controls. Avoid generic phrases like "improve security".
 - `references` (optional): URLs to authoritative deep-dive guidance (OWASP cheat sheets, NIST publications, vendor security docs, RFCs). Prefer stable canonical sources over blog posts. Two to four high-quality links is the sweet spot.
+
+## Severity rubric
+
+Severity ranks the **intrinsic impact** of a threat being realised without compensating controls. The catalogue cannot know the likelihood of exploitation in any particular environment, so likelihood is deliberately not weighted — only impact is. The four levels are anchored to [CVSS v3.1](https://www.first.org/cvss/v3-1/specification-document) qualitative bands so a contributor can sanity-check a rating against a known industry standard.
+
+When more than one tier could fit, **pick the highest** that applies.
+
+### Critical
+
+Any of:
+
+- Direct, persistent privileged execution on a host or control plane: root, SYSTEM, container host, cluster admin, cloud account or organisation admin, KMS key holder.
+- Disclosure of "kingdom keys" — long-lived credentials, tokens, certificates, or secrets that *themselves* grant the privileged tier above (cluster certificates, etcd snapshots, root API keys, broad service-account keys).
+- Wholesale loss of integrity or availability of tenant data: mass deletion, ransom encryption, control-plane wipe, destruction of backups.
+
+CVSS-equivalent: typically C:H/I:H/A:H, often scope-changed; CVSS ≥ 9.0.
+
+### High
+
+Any of:
+
+- Initial code execution or full compromise of a single workload, service, or account at non-privileged level, with realistic abuse paths to escalate.
+- Theft of credentials, tokens, or session material that grants access to other systems but **not** directly to the privileged tier above.
+- Authentication or authorisation bypass that exposes substantial protected data or functionality.
+- Lateral pivot capability that enables — but does not by itself constitute — a privileged compromise.
+
+CVSS-equivalent: typically two of C/I/A at High, scope unchanged; CVSS 7.0–8.9.
+
+### Medium
+
+Any of:
+
+- Unauthorised read or modification of protected application data without obtaining execution or credentials.
+- Design or configuration weakness that **expands the blast radius** of other threats but is not by itself directly exploitable for access (excessive permissions, weak segmentation, unpatched non-critical CVEs).
+- Tampering with messages, events, or workflows in transit or at processing time, without persistent access.
+
+CVSS-equivalent: one of C/I/A at High, or two at Low; CVSS 4.0–6.9.
+
+### Low
+
+Any of:
+
+- Repudiation: ability to deny or obscure an authorised action without altering data integrity (e.g. logging bypass with no further chained effect).
+- Low-impact information disclosure: internal hostnames, version banners, fingerprintable error messages.
+- Volumetric availability impact only — service is degraded but no confidentiality or integrity loss.
+
+CVSS-equivalent: CVSS 0.1–3.9.
+
+### Tie-breakers and anti-patterns
+
+- **Credential disclosure tiers on what the credential unlocks.** An AWS root key is Critical. A single user's app password is High. A read-only API token to non-sensitive endpoints is Medium.
+- **Don't escalate by reputation.** "Ransomware" sounds scary, but the rating still has to come from the rubric (in its case: wholesale data integrity and availability loss → Critical).
+- **Severity is per threat *class*, not per worst-known instance.** `unpatched-vulnerabilities` is rated on the category's typical blast radius, not the worst CVE that ever shipped under that label.
+- **Don't weight likelihood, exploitability, or detection difficulty.** Those are environmental — the catalogue ranks impact only.
 
 ## The ID-stability contract
 
@@ -96,6 +150,7 @@ Override the port with `PORT=4321 npm run dev:site`. The generated `site/` direc
 ### Package version bump guidance
 - Breaking changes (deletions, schema changes): major version bump.
 - New threats, new controls on existing threats, additional fields: minor bump.
+- Severity re-grades (see the [Severity rubric](#severity-rubric)): minor bump. Severity isn't an ID, but consumers filter and sort on it, so any change must be called out in the changelog with the old → new value.
 - Wording fixes, typo corrections: patch bump.
 
 ### Expected package metadata
